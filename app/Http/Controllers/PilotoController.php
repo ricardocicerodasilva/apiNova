@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\piloto;
+use App\Models\Piloto;
 
 class PilotoController extends Controller
 {
@@ -17,20 +17,22 @@ class PilotoController extends Controller
     //Crud -> Read(leitura) Select/Visualizar
 
     public function index(){
-        $regBook = piloto::All();
+        $regBook = Piloto::All();
         $contador = $regBook->count();
 
-        return 'pilotos: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
+        return 'piloto: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
     }
     //Mostrar um tipo de registro especifico
     //Crud -> Read(leitura) Select/Visualizar
     //A função show busca a id e retorna se o livros foram localizados por id.
 
     public function show(string $id){ 
-        $regBook = piloto::find($id);
+        //dd($idPiloto);
+        //$iddPiloto = '1';
+        $regBook = Piloto::find($id);
 
         if($regBook){
-            return 'piloto localizado: '.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
+            return 'piloto: '.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
         }else{
             return 'piloto não localizado. '.Response()->json([],Response::HTTP_NO_CONTENT);
         }
@@ -42,14 +44,12 @@ class PilotoController extends Controller
         $regBook = $request->All();
 
         $regVerifq = Validator::make($regBook,[
-            'idPiloto'=>'required',
             'nomePiloto'=>'required',
-            'idadePiloto'=>'required'
+            'idade'=>'required'
         ]);
 
         if($regVerifq->fails()){
             return 'Registros Invalidos: '.Response()->json([],Response::HTTP_NO_CONTENT);
-
         }
         $regBookCad = piloto::create($regBook);
 
@@ -70,9 +70,8 @@ class PilotoController extends Controller
         $regBook = $request->All();
 
         $regVerifq = Validator::make($regBook,[
-          'idPiloto'=>'required',
             'nomePiloto'=>'required',
-            'idadePiloto'=>'required'
+            'idade'=>'required'
         ]);
 
         if($regVerifq->fails()){
@@ -80,9 +79,9 @@ class PilotoController extends Controller
 
         }
         $regBookBanco = piloto::Find($id);
-        $regBookBanco->idPiloto = $regBook['idPiloto'];
+       //* $regBookBanco->idPiloto = $regBook['idPiloto'];*/
         $regBookBanco->nomePiloto = $regBook['nomePiloto'];
-        $regBookBanco->idadePiloto = $regBook['idadePiloto'];
+        $regBookBanco->idadePiloto = $regBook['idade'];
 
         $retorno = $regBookBanco->save();
 
@@ -101,10 +100,11 @@ class PilotoController extends Controller
     $regBook = piloto::Find($id);
 
     if($regBook->delete()){   
-    return "O piloto foi deletado com sucesso".response()->json([],Response::HTTP_NO_CONTENT);
+        return "O piloto foi deletado com sucesso".response()->json([],Response::HTTP_NO_CONTENT);
+    }else {
+        return "Algo deu errado: piloto não deletado".response()->json([],Response::HTTP_NO_CONTENT);
     }
 
-    return "Algo deu errado: piloto não deletado".response()->json([],Response::HTTP_NO_CONTENT);
     }
 
     //Crud

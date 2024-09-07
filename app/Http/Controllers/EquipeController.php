@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\piloto;
+use App\Models\equipe;
 
 class EquipeController extends Controller
 {
@@ -21,7 +21,7 @@ class EquipeController extends Controller
         $regBook = equipe::All();
         $contador = $regBook->count();
 
-        return 'equipes: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
+        return 'equipe: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
     }
     //Mostrar um tipo de registro especifico
     //Crud -> Read(leitura) Select/Visualizar
@@ -52,7 +52,7 @@ class EquipeController extends Controller
             return 'Registros Invalidos: '.Response()->json([],Response::HTTP_NO_CONTENT);
 
         }
-        $regBookCad = tbllivros::create($regBook);
+        $regBookCad = equipe::create($regBook);
 
         if( $regBookCad){
             return 'Equipe cadastrada: '.Response()->json([],Response::HTTP_NO_CONTENT);
