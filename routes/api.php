@@ -5,6 +5,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PilotoController;
+use App\Http\Controllers\EquipeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,9 +21,9 @@ Route::delete('/piloto/{id}',[PilotoController::class,'destroy']);
 
 
 Route::get('/',function(){return response()->json(['Sucesso'=>true]);});
-Route::get('/equipe',[equipeController::class,'index']);
+Route::get('/equipe',[EquipeController::class,'index']);
 //falta testa-> busca id, deletar e o alterar.
-Route::get('/equipe/{id}',[equipeController::class,'show']);
-Route::post('/equipe',[equipeController::class,'store']);
-Route::put('/equipe/{id}',[equipeController::class,'update']);
-Route::delete('/equipe/{id}',[equipeController::class,'destroy']);
+Route::get('/equipe/{id}',[EquipeController::class,'show']);
+Route::post('/equipe',[EquipeController::class,'store']);
+Route::put('/equipe/{id}',[EquipeController::class,'update']);
+Route::delete('/equipe/{id}',[EquipeController::class,'destroy']);

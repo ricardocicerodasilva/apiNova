@@ -7,33 +7,33 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\equipe;
+use App\Models\Equipe;
 
 class EquipeController extends Controller
 {
    
     //construir o crud.
     
-    //Mostrar todos os registros da tabela equipe
+    //Mostrar todos os registros da tabela Equipe
     //Crud -> Read(leitura) Select/Visualizar
 
     public function index(){
-        $regBook = equipe::All();
+        $regBook = Equipe::All();
         $contador = $regBook->count();
 
-        return 'equipe: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
+        return 'Equipe: '.$contador.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
     }
     //Mostrar um tipo de registro especifico
     //Crud -> Read(leitura) Select/Visualizar
     //A função show busca a id e retorna se o livros foram localizados por id.
 
     public function show(string $id){ 
-        $regBook = equipe::find($id);
+        $regBook = Equipe::find($id);
 
         if($regBook){
-            return 'equipe localizada: '.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
+            return 'Equipe localizada: '.$regBook.Response()->json([],Response::HTTP_NO_CONTENT);
         }else{
-            return 'equipe não localizada. '.Response()->json([],Response::HTTP_NO_CONTENT);
+            return 'Equipe não localizada. '.Response()->json([],Response::HTTP_NO_CONTENT);
         }
     }
 
@@ -43,7 +43,7 @@ class EquipeController extends Controller
         $regBook = $request->All();
 
         $regVerifq = Validator::make($regBook,[
-            'idEquipe'=>'required',
+            
             'nomeEquipe'=>'required',
             'logo'=>'required'
         ]);
@@ -52,7 +52,7 @@ class EquipeController extends Controller
             return 'Registros Invalidos: '.Response()->json([],Response::HTTP_NO_CONTENT);
 
         }
-        $regBookCad = equipe::create($regBook);
+        $regBookCad = Equipe::create($regBook);
 
         if( $regBookCad){
             return 'Equipe cadastrada: '.Response()->json([],Response::HTTP_NO_CONTENT);
@@ -71,7 +71,7 @@ class EquipeController extends Controller
         $regBook = $request->All();
 
         $regVerifq = Validator::make($regBook,[
-           'idEquipe'=>'required',
+           
             'nomeEquipe'=>'required',
             'logo'=>'required'
         ]);
@@ -79,17 +79,17 @@ class EquipeController extends Controller
             return 'Registros não atualizados: '.Response()->json([],Response::HTTP_NO_CONTENT);
 
         }
-        $regBookBanco = equipe::Find($id);
-        $regBookBanco->idPiloto = $regBook['idPiloto'];
-        $regBookBanco->nomePiloto = $regBook['nomePiloto'];
-        $regBookBanco->idadePiloto = $regBook['idadePiloto'];
+        $regBookBanco = Equipe::find($id);
+       
+        $regBookBanco->nomeEquipe = $regBook['nomeEquipe'];
+        $regBookBanco->logo= $regBook['logo'];
 
         $retorno = $regBookBanco->save();
 
         if($retorno){
-            return "equipe atualizada com sucesso.".Response()->json([],Response::HTTP_NO_CONTENT);
+            return "Equipe atualizada com sucesso.".Response()->json([],Response::HTTP_NO_CONTENT);
         }else{
-            return "Atenção... Erro: equipe não atualizado".Response()->json([],Response::HTTP_NO_CONTENT);
+            return "Atenção... Erro: Equipe não atualizado".Response()->json([],Response::HTTP_NO_CONTENT);
         }
 
     }
@@ -98,13 +98,13 @@ class EquipeController extends Controller
     //Crud -> delete(apagar)
     public function destroy(string $id){
 
-    $regBook = equipe::Find($id);
+    $regBook = Equipe::Find($id);
 
     if($regBook->delete()){   
-    return "A equipe foi deletado com sucesso".response()->json([],Response::HTTP_NO_CONTENT);
+    return "A Equipe foi deletado com sucesso".response()->json([],Response::HTTP_NO_CONTENT);
     }
 
-    return "Algo deu errado: equipe não deletado".response()->json([],Response::HTTP_NO_CONTENT);
+    return "Algo deu errado: Equipe não deletado".response()->json([],Response::HTTP_NO_CONTENT);
     }
 
     //Crud

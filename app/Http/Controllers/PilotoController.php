@@ -51,7 +51,7 @@ class PilotoController extends Controller
         if($regVerifq->fails()){
             return 'Registros Invalidos: '.Response()->json([],Response::HTTP_NO_CONTENT);
         }
-        $regBookCad = piloto::create($regBook);
+        $regBookCad = Piloto::create($regBook);
 
         if( $regBookCad){
             return 'piloto cadastrado: '.Response()->json([],Response::HTTP_NO_CONTENT);
@@ -78,10 +78,10 @@ class PilotoController extends Controller
             return 'Registros não atualizados: '.Response()->json([],Response::HTTP_NO_CONTENT);
 
         }
-        $regBookBanco = piloto::Find($id);
-       //* $regBookBanco->idPiloto = $regBook['idPiloto'];*/
+        $regBookBanco = Piloto::find($id);
+      
         $regBookBanco->nomePiloto = $regBook['nomePiloto'];
-        $regBookBanco->idadePiloto = $regBook['idade'];
+        $regBookBanco->idade = $regBook['idade'];
 
         $retorno = $regBookBanco->save();
 

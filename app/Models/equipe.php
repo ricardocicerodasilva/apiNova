@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class equipe extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'idEquipe';
     protected $fillable = [
-        'idEquipe',
+        
         'nomeEquipe',
         'logo',
     ];
